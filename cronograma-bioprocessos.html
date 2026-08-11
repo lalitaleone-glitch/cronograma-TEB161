@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cronograma 2026 — Projetos de Indústria de Biotecnologia II</title>
+<style>
+  :root{
+    --deep:      #f5f8f4;
+    --deep2:     #eef4ee;
+    --surface:   #ffffff;
+    --surface2:  #f2f7f1;
+    --purple:    #6d5fb0;
+    --teal:      #2f8c82;
+    --green:     #5fa14c;
+    --yellow:    #b7a927;
+    --foam:      #1c2e29;
+    --foam-dim:  #5c6f68;
+    --line:      rgba(28,46,41,0.12);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  body{
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(109,95,176,0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 0%, rgba(199,201,90,0.14), transparent 45%),
+      linear-gradient(180deg, var(--deep) 0%, var(--deep2) 100%);
+    color: var(--foam);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    min-height: 100vh;
+    padding: 0 0 80px 0;
+  }
+
+  .utility{
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ---------- Kelp divider (signature element) ---------- */
+  .kelp-strand{
+    width:100%;
+    height:34px;
+    display:block;
+    opacity:0.55;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:relative;
+    padding: 56px 24px 40px;
+    max-width: 860px;
+    margin: 0 auto;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    font-size:11px;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  h1{
+    font-size: clamp(28px, 5vw, 44px);
+    margin: 0 0 10px;
+    font-weight: 700;
+    background: linear-gradient(100deg, var(--purple), var(--teal) 45%, var(--green) 70%, var(--yellow));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height:1.15;
+  }
+  .subtitle{
+    color: var(--foam-dim);
+    font-size: 15px;
+    font-style: italic;
+    margin: 0 0 6px;
+  }
+  .meta{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    color: var(--foam-dim);
+    opacity:0.8;
+  }
+
+  .progress-wrap{
+    max-width: 860px;
+    margin: 0 auto 8px;
+    padding: 0 24px;
+  }
+  .progress-track{
+    height: 8px;
+    border-radius: 5px;
+    background: rgba(234,243,236,0.1);
+    overflow:hidden;
+    border: 1px solid var(--line);
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, var(--purple), var(--teal), var(--green), var(--yellow));
+    transition: width 0.5s ease;
+  }
+  .progress-label{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--foam-dim);
+    margin-top: 8px;
+    text-align:right;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline{
+    max-width: 860px;
+    margin: 30px auto 0;
+    padding: 0 24px;
+    position: relative;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left: 100px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--purple), var(--teal), var(--green), var(--yellow));
+    opacity:0.35;
+  }
+  @media (max-width: 620px){
+    .timeline::before{ left: 20px; }
+  }
+
+  .entry{
+    position:relative;
+    display:grid;
+    grid-template-columns: 100px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    align-items:start;
+  }
+  @media (max-width: 620px){
+    .entry{ grid-template-columns: 1fr; padding-left: 34px; }
+    .entry .date-col{ padding-left:0; margin-bottom: 6px; }
+    .entry::before{ left: 6px !important; }
+  }
+
+  .entry::before{
+    content:"";
+    position:absolute;
+    left: 95px;
+    top: 26px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--deep);
+    border: 2px solid var(--teal);
+    z-index:2;
+  }
+  .entry.done::before{
+    background: var(--green);
+    border-color: var(--yellow);
+    box-shadow: 0 0 10px rgba(199,201,90,0.6);
+  }
+
+  .date-col{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-weight:700;
+    font-size: 14px;
+    color: var(--foam-dim);
+    padding-top: 4px;
+    text-align:right;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 620px){ .date-col{ text-align:left; } }
+
+  .card{
+    background: linear-gradient(160deg, var(--surface), var(--surface2));
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    position: relative;
+    overflow:hidden;
+    box-shadow: 0 2px 10px rgba(28,46,41,0.06);
+  }
+  .card::after{
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    width: 4px; height:100%;
+    background: linear-gradient(180deg, var(--purple), var(--teal), var(--green));
+    opacity:0.7;
+  }
+  .card.milestone::after{
+    background: linear-gradient(180deg, var(--yellow), var(--green));
+  }
+
+  .card.milestone-delivery{
+    background: linear-gradient(160deg, #fbf6df, #f5edc0);
+    border: 1px solid rgba(183,169,39,0.35);
+  }
+  .card.milestone-delivery::after{
+    background: linear-gradient(180deg, var(--yellow), var(--green));
+    width: 5px;
+    opacity: 1;
+  }
+  .card.milestone-delivery .event-title,
+  .card.milestone-delivery .tag{ color:#6b6112; }
+
+  .card.milestone-defense{
+    background: linear-gradient(160deg, #efe9fb, #e2d8f5);
+    border: 1px solid rgba(109,95,176,0.4);
+  }
+  .card.milestone-defense::after{
+    background: linear-gradient(180deg, var(--purple), #4a3b8a);
+    width: 5px;
+    opacity: 1;
+  }
+  .card.milestone-defense .event-title,
+  .card.milestone-defense .tag{ color:#4a3b8a; }
+  .card.past{
+    filter: grayscale(0.65);
+    opacity: 0.55;
+  }
+  .card.past:hover{
+    opacity: 0.8;
+  }
+  .entry.overdue::before{
+    border-color: #9aa39d;
+    background: #e2e6e3;
+  }
+  .entry.overdue .date-col{
+    opacity: 0.6;
+  }
+  .card.simple{
+    background: transparent;
+    border: 1px dashed var(--line);
+    padding: 10px 18px;
+  }
+  .card.simple::after{ display:none; }
+
+  .card-head{
+    display:flex;
+    align-items:flex-start;
+    gap: 12px;
+  }
+
+  .card-head.checkable{ cursor:pointer; }
+
+  .checkbox{
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2.5px solid var(--teal);
+    margin-top: 2px;
+    cursor:pointer;
+    background: #ffffff;
+    position:relative;
+    transition: all 0.2s ease;
+  }
+  .checkbox:hover{ border-color: var(--yellow); transform: scale(1.06); }
+  .checkbox.checked{
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    border-color: var(--green);
+  }
+  .checkbox.checked::after{
+    content:"✓";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight:900;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .tag{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    font-weight: 700;
+    display:block;
+    margin-bottom: 3px;
+  }
+  .event-title{
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--foam);
+    margin: 0 0 4px;
+  }
+  .event-desc{
+    font-size: 13.5px;
+    color: var(--foam-dim);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .info-text{
+    font-size: 13px;
+    color: var(--foam-dim);
+    font-style: italic;
+  }
+
+  /* link field under presentations */
+  .link-row{
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+  }
+  .link-row svg{ flex:0 0 auto; opacity:0.7; }
+  .link-input{
+    flex:1;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 10px;
+    color: var(--foam);
+    font-size: 12.5px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    outline:none;
+  }
+  .link-input::placeholder{ color: rgba(28,46,41,0.35); }
+  .link-input:focus{ border-color: var(--teal); }
+  .link-go{
+    flex:0 0 auto;
+    font-size: 11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color: #ffffff;
+    background: linear-gradient(100deg, var(--teal), var(--green));
+    border:none;
+    border-radius: 7px;
+    padding: 7px 12px;
+    cursor:pointer;
+    text-decoration:none;
+    white-space:nowrap;
+    opacity: 0.4;
+    pointer-events:none;
+    transition: opacity 0.2s ease;
+  }
+  .link-go.active{ opacity:1; pointer-events:auto; }
+  .save-hint{
+    font-size:10px;
+    color: var(--foam-dim);
+    opacity:0;
+    transition: opacity 0.3s ease;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+  }
+  .save-hint.show{ opacity:0.7; }
+
+  /* comment / related content field */
+  .comment-row{
+    margin-top: 10px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+  }
+  .comment-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size: 10.5px;
+    text-transform:uppercase;
+    letter-spacing: 0.08em;
+    color: var(--foam-dim);
+    margin-bottom: 5px;
+  }
+  .comment-label svg{ opacity:0.7; }
+  .comment-input{
+    width:100%;
+    resize: vertical;
+    min-height: 46px;
+    max-height: 140px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: var(--foam);
+    font-size: 12.5px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    outline:none;
+    line-height:1.45;
+  }
+  .comment-input::placeholder{ color: rgba(28,46,41,0.35); }
+  .comment-input:focus{ border-color: var(--teal); }
+  .comment-footer{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .char-count{
+    font-size: 10px;
+    color: var(--foam-dim);
+    opacity: 0.7;
+  }
+  .char-count.limit{ color: #b3491f; opacity:1; }
+
+  footer{
+    max-width: 860px;
+    margin: 40px auto 0;
+    padding: 0 24px;
+    text-align:center;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    color: var(--foam-dim);
+    opacity:0.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow utility">UFPR · Engenharia de Bioprocessos e Biotecnologia</div>
+  <h1>Cronograma 2026</h1>
+  <p class="subtitle">Projetos de Indústria de Biotecnologia II</p>
+  <p class="meta">Roteiro de apresentações, entregas e defesa</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label utility" id="progressLabel">0 de 0 concluídas</div>
+</div>
+
+<div class="kelp-strand" aria-hidden="true">
+  <svg viewBox="0 0 860 34" width="100%" height="34" preserveAspectRatio="none">
+    <path d="M0,17 Q 40,2 80,17 T 160,17 T 240,17 T 320,17 T 400,17 T 480,17 T 560,17 T 640,17 T 720,17 T 800,17 T 880,17"
+      fill="none" stroke="url(#kelpGrad)" stroke-width="2"/>
+    <defs>
+      <linearGradient id="kelpGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#6d5fb0"/>
+        <stop offset="35%" stop-color="#3d9a91"/>
+        <stop offset="70%" stop-color="#7fb96b"/>
+        <stop offset="100%" stop-color="#c7c95a"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+<div class="timeline" id="timeline"></div>
+
+<footer class="utility">05/12 — último dia letivo · 07–11/12 — exames finais</footer>
+
+<script>
+const ENTRIES = [
+  {id:"e1", date:"06/08", type:"class", title:"Aula 1", desc:"Orientações / roteiro básico sugerido para o projeto / distribuição dos temas"},
+  {id:"e2", date:"13/08", type:"presentation", tag:"1ª apresentação", title:"Tema e revisão bibliográfica", desc:"Discorrer sobre o tema / revisão bibliográfica / patentes"},
+  {id:"e3", date:"27/08", type:"presentation", tag:"2ª apresentação", title:"Fluxograma e mercado", desc:"Fluxograma / localização / dados mercadológicos / escala de produção / definição do produto / definição-especificação dos insumos e MP"},
+  {id:"e4", date:"10/09", type:"presentation", tag:"3ª apresentação", title:"Processo e balanço de massa", desc:"Definição do processo / processamento da MP / recuperação e purificação do produto / balanço de massa"},
+  {id:"e5", date:"17/09", type:"delivery", title:"Entrega do 1º documento escrito", desc:"Fluxograma de processo definido e descrito / balanço de massa — sem aula"},
+  {id:"e6", date:"24/09", type:"presentation", tag:"4ª apresentação", title:"Equipamentos", desc:"Listar / relacionar equipamentos / dimensionamento prévio dos equipamentos (volumes / capacidades / potências etc.)"},
+  {id:"e7", date:"08/10", type:"presentation", tag:"5ª apresentação", title:"Balanços de energia", desc:"Balanços de energia / fluxos de energia / fluxograma de instrumentação e controle"},
+  {id:"e8", date:"22/10", type:"presentation", tag:"6ª apresentação", title:"Gestão ambiental", desc:"Gestão ambiental / geração de resíduos / linhas de efluentes / especificação e dimensionamento das unidades e equipamentos da ETE"},
+  {id:"e9", date:"05/11", type:"presentation", tag:"7ª apresentação", title:"Dados finais do empreendimento", desc:"Áreas / unidades industriais / estudo econômico / índices de viabilidade econômica"},
+  {id:"e10", date:"19/11", type:"delivery", title:"Entrega do documento escrito e em USB", desc:"Versão final do trabalho"},
+  {id:"e11", date:"03/12", type:"defense", title:"Defesa / Prova", desc:"Apresentação final do projeto"}
+];
+
+const STORAGE_KEY = "cronograma-bioproc-2026";
+
+function iconLink(){
+  return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b9d0c8" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.49-1.49"/></svg>`;
+}
+function iconComment(){
+  return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5c6f68" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+}
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+const MAX_COMMENT = 300;
+
+const YEAR = 2026;
+function parseEntryDate(dateStr){
+  const [d, m] = dateStr.split('/').map(Number);
+  return new Date(YEAR, m - 1, d);
+}
+function isPastDate(dateStr){
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  return parseEntryDate(dateStr) < today;
+}
+
+function render(state){
+  const tl = document.getElementById('timeline');
+  tl.innerHTML = '';
+
+  ENTRIES.forEach(entry => {
+    const s = state[entry.id] || {done:false, link:"", comment:""};
+    const isCheckable = entry.type !== "class";
+    const hasLink = entry.type === "presentation";
+    const overdue = isCheckable && !s.done && isPastDate(entry.date);
+
+    const wrap = document.createElement('div');
+    wrap.className = "entry" + (isCheckable && s.done ? " done" : "") + (overdue ? " overdue" : "");
+
+    const cardClass = (entry.type === "class" ? "card simple"
+      : entry.type === "delivery" ? "card milestone-delivery"
+      : entry.type === "defense" ? "card milestone-defense"
+      : "card") + (overdue ? " past" : "");
+
+    let checkboxHtml = "";
+    if(isCheckable){
+      checkboxHtml = `<button class="checkbox ${s.done ? 'checked':''}" data-id="${entry.id}" aria-label="Marcar como concluído"></button>`;
+    }
+
+    let linkHtml = "";
+    if(hasLink){
+      const hasVal = s.link && s.link.trim().length > 0;
+      const commentVal = s.comment || "";
+      const commentLen = commentVal.length;
+      linkHtml = `
+        <div class="link-row">
+          ${iconLink()}
+          <input class="link-input" type="text" placeholder="Link dos slides…" value="${s.link ? s.link.replace(/"/g,'&quot;') : ''}" data-linkid="${entry.id}">
+          <a class="link-go ${hasVal ? 'active':''}" href="${hasVal ? s.link : '#'}" target="_blank" rel="noopener" data-goid="${entry.id}">Abrir</a>
+          <span class="save-hint utility" data-hintid="${entry.id}">salvo</span>
+        </div>
+        <div class="comment-row">
+          <div class="comment-label">${iconComment()}<span>Comentários / conteúdos relacionados</span></div>
+          <textarea class="comment-input" maxlength="${MAX_COMMENT}" placeholder="Anotações, referências, links de artigos…" data-commentid="${entry.id}">${escapeHtml(commentVal)}</textarea>
+          <div class="comment-footer">
+            <span class="char-count utility" data-countid="${entry.id}">${commentLen}/${MAX_COMMENT}</span>
+          </div>
+        </div>`;
+    }
+
+    wrap.innerHTML = `
+      <div class="date-col utility">${entry.date}</div>
+      <div class="${cardClass}">
+        <div class="card-head ${isCheckable ? 'checkable' : ''}" ${isCheckable ? `data-headid="${entry.id}"` : ''}>
+          ${checkboxHtml}
+          <div style="flex:1;">
+            ${entry.tag ? `<span class="tag">${entry.tag}</span>` : ""}
+            <p class="${entry.type==='class' ? 'info-text' : 'event-title'}">${entry.title}</p>
+            ${entry.desc ? `<p class="event-desc">${entry.desc}</p>` : ""}
+          </div>
+        </div>
+        ${linkHtml}
+      </div>
+    `;
+    tl.appendChild(wrap);
+  });
+
+  // progress
+  const checkable = ENTRIES.filter(e => e.type !== "class");
+  const doneCount = checkable.filter(e => (state[e.id]||{}).done).length;
+  const pct = checkable.length ? Math.round((doneCount/checkable.length)*100) : 0;
+  document.getElementById('progressFill').style.width = pct + "%";
+  document.getElementById('progressLabel').textContent = `${doneCount} de ${checkable.length} concluídas`;
+
+  // handlers
+  async function toggle(id){
+    state[id] = state[id] || {done:false, link:"", comment:""};
+    state[id].done = !state[id].done;
+    await save(state);
+    render(state);
+  }
+
+  tl.querySelectorAll('.checkbox').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggle(btn.dataset.id);
+    });
+  });
+
+  tl.querySelectorAll('.card-head.checkable').forEach(head => {
+    head.addEventListener('click', (e) => {
+      // avoid double-toggling when the click already landed on the checkbox itself
+      if(e.target.closest('.checkbox')) return;
+      toggle(head.dataset.headid);
+    });
+  });
+
+  tl.querySelectorAll('.link-input').forEach(input => {
+    let debounce;
+    input.addEventListener('input', () => {
+      const id = input.dataset.linkid;
+      const val = input.value.trim();
+      state[id] = state[id] || {done:false, link:"", comment:""};
+      state[id].link = val;
+
+      const goBtn = tl.querySelector(`[data-goid="${id}"]`);
+      if(goBtn){
+        if(val){ goBtn.href = val; goBtn.classList.add('active'); }
+        else{ goBtn.href = '#'; goBtn.classList.remove('active'); }
+      }
+
+      clearTimeout(debounce);
+      debounce = setTimeout(async () => {
+        await save(state);
+        const hint = tl.querySelector(`[data-hintid="${id}"]`);
+        if(hint){
+          hint.classList.add('show');
+          setTimeout(()=> hint.classList.remove('show'), 1200);
+        }
+      }, 500);
+    });
+  });
+
+  tl.querySelectorAll('.comment-input').forEach(area => {
+    let debounce;
+    area.addEventListener('input', () => {
+      const id = area.dataset.commentid;
+      const val = area.value.slice(0, MAX_COMMENT);
+      state[id] = state[id] || {done:false, link:"", comment:""};
+      state[id].comment = val;
+
+      const counter = tl.querySelector(`[data-countid="${id}"]`);
+      if(counter){
+        counter.textContent = `${val.length}/${MAX_COMMENT}`;
+        counter.classList.toggle('limit', val.length >= MAX_COMMENT);
+      }
+
+      clearTimeout(debounce);
+      debounce = setTimeout(async () => {
+        await save(state);
+      }, 500);
+    });
+  });
+}
+
+async function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){
+    return {};
+  }
+}
+
+async function save(state){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){
+    console.error("Erro ao salvar:", e);
+  }
+}
+
+(async function init(){
+  const state = await load();
+  render(state);
+})();
+</script>
+
+</body>
+</html>
