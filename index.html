@@ -494,7 +494,9 @@ const ENTRIES = [
   {id:"e11", date:"03/12", type:"defense", title:"Defesa / Prova", desc:"Apresentação final do projeto"}
 ];
 
-const STORAGE_KEY = "cronograma-bioproc-2026";
+const JSONBIN_ID = "6a7bb3e2f5f4af5e29097f31";
+const JSONBIN_KEY = "$2a$10$9GMREb9GHtnUUIzyYFK.FOmMnWbIvprEtPVH0WphYv6qP7.J1eZOe";
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
 
 function iconLink(){
   return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b9d0c8" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.49-1.49"/></svg>`;
@@ -663,16 +665,28 @@ function render(state){
 
 async function load(){
   try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
+    const res = await fetch(`${JSONBIN_URL}/latest`, {
+      headers: { 'X-Master-Key': JSONBIN_KEY }
+    });
+    if(!res.ok) throw new Error('fetch failed');
+    const data = await res.json();
+    return data.record || {};
   }catch(e){
+    console.error("Erro ao carregar:", e);
     return {};
   }
 }
 
 async function save(state){
   try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_KEY
+      },
+      body: JSON.stringify(state)
+    });
   }catch(e){
     console.error("Erro ao salvar:", e);
   }
@@ -681,6 +695,18 @@ async function save(state){
 (async function init(){
   const state = await load();
   render(state);
+
+  // Atualiza periodicamente para refletir o que outras pessoas preencheram,
+  // sem interromper quem estiver digitando no momento.
+  setInterval(async () => {
+    const tl = document.getElementById('timeline');
+    const active = document.activeElement;
+    const isTyping = active && tl && tl.contains(active) &&
+      (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA');
+    if(isTyping) return;
+    const freshState = await load();
+    render(freshState);
+  }, 15000);
 })();
 </script>
 
