@@ -129,7 +129,7 @@
     opacity:0.35;
   }
   @media (max-width: 620px){
-    .timeline::before{ left: 20px; }
+    .timeline::before{ display:none; }
   }
 
   .entry{
@@ -141,9 +141,8 @@
     align-items:start;
   }
   @media (max-width: 620px){
-    .entry{ grid-template-columns: 1fr; padding-left: 34px; }
-    .entry .date-col{ padding-left:0; margin-bottom: 6px; }
-    .entry::before{ left: 6px !important; }
+    .entry{ grid-template-columns: 1fr; padding-left: 0; gap: 8px; }
+    .entry::before{ display:none; }
   }
 
   .entry::before{
@@ -173,7 +172,33 @@
     text-align:right;
     letter-spacing: 0.02em;
   }
-  @media (max-width: 620px){ .date-col{ text-align:left; } }
+  @media (max-width: 620px){
+    .date-col{
+      text-align:left;
+      padding-top:0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .date-col::before{
+      content:"";
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background: var(--deep);
+      border: 2px solid var(--teal);
+      flex:0 0 auto;
+    }
+    .entry.done .date-col::before{
+      background: var(--green);
+      border-color: var(--yellow);
+      box-shadow: 0 0 8px rgba(199,201,90,0.5);
+    }
+    .entry.overdue .date-col::before{
+      border-color: #9aa39d;
+      background: #e2e6e3;
+    }
+  }
 
   .card{
     background: linear-gradient(160deg, var(--surface), var(--surface2));
