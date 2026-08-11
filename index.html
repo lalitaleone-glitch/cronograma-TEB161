@@ -121,7 +121,7 @@
   .timeline::before{
     content:"";
     position:absolute;
-    left: 100px;
+    left: 109px;
     top: 6px;
     bottom: 6px;
     width: 2px;
@@ -148,7 +148,7 @@
   .entry::before{
     content:"";
     position:absolute;
-    left: 95px;
+    left: 103px;
     top: 26px;
     width: 12px;
     height: 12px;
@@ -176,18 +176,20 @@
     .date-col{
       text-align:left;
       padding-top:0;
-      display:flex;
-      align-items:center;
-      gap:8px;
+      padding-left:24px;
+      position:relative;
     }
     .date-col::before{
       content:"";
+      position:absolute;
+      left:0;
+      top:50%;
+      transform:translateY(-50%);
       width:10px;
       height:10px;
       border-radius:50%;
       background: var(--deep);
       border: 2px solid var(--teal);
-      flex:0 0 auto;
     }
     .entry.done .date-col::before{
       background: var(--green);
