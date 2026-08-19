@@ -111,6 +111,58 @@
     text-align:right;
   }
 
+  /* ---------- Extra-dates toggle ---------- */
+  .extra-toggle-wrap{
+    max-width: 860px;
+    margin: 4px auto 0;
+    padding: 0 24px;
+    display:flex;
+    justify-content:center;
+  }
+  .extra-toggle{
+    display:flex;
+    align-items:center;
+    gap: 7px;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--foam-dim);
+    cursor:pointer;
+    transition: all 0.2s ease;
+  }
+  .extra-toggle:hover{
+    border-color: var(--teal);
+    color: var(--foam);
+  }
+  .extra-toggle .chevron{
+    transition: transform 0.25s ease;
+    flex:0 0 auto;
+  }
+  .extra-toggle.open .chevron{
+    transform: rotate(180deg);
+  }
+
+  .card.extra-entry{
+    background: rgba(255,255,255,0.45);
+    border: 1px dashed var(--line);
+    padding: 10px 18px;
+    box-shadow:none;
+  }
+  .card.extra-entry::after{ display:none; }
+  .card.extra-entry .tag{
+    color: var(--teal);
+  }
+  .card.extra-entry .event-title{
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .card.extra-entry .event-desc{
+    font-size: 12.5px;
+  }
+
   /* ---------- Timeline ---------- */
   .timeline{
     max-width: 860px;
@@ -475,6 +527,13 @@
   </svg>
 </div>
 
+<div class="extra-toggle-wrap">
+  <button id="toggleExtra" class="extra-toggle utility" type="button">
+    <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    <span id="extraToggleLabel">Mostrar reuniões semanais e prazos internos</span>
+  </button>
+</div>
+
 <div class="timeline" id="timeline"></div>
 
 <footer class="utility">05/12 — último dia letivo · 07–11/12 — exames finais</footer>
@@ -491,7 +550,42 @@ const ENTRIES = [
   {id:"e8", date:"22/10", type:"presentation", tag:"6ª apresentação", title:"Gestão ambiental", desc:"Gestão ambiental / geração de resíduos / linhas de efluentes / especificação e dimensionamento das unidades e equipamentos da ETE"},
   {id:"e9", date:"05/11", type:"presentation", tag:"7ª apresentação", title:"Dados finais do empreendimento", desc:"Áreas / unidades industriais / estudo econômico / índices de viabilidade econômica"},
   {id:"e10", date:"19/11", type:"delivery", title:"Entrega do documento escrito e em USB", desc:"Versão final do trabalho"},
-  {id:"e11", date:"03/12", type:"defense", title:"Defesa / Prova", desc:"Apresentação final do projeto"}
+  {id:"e11", date:"03/12", type:"defense", title:"Defesa / Prova", desc:"Apresentação final do projeto"},
+
+  // ---- datas extras (escondidas por padrão) ----
+  {id:"m1", date:"12/08", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+  {id:"m2", date:"19/08", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m3", date:"26/08", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+  {id:"m4", date:"02/09", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m5", date:"09/09", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+  {id:"m6", date:"16/09", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m7", date:"23/09", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+  {id:"m8", date:"30/09", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m9", date:"07/10", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+  {id:"m10", date:"14/10", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m11", date:"21/10", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+  {id:"m12", date:"28/10", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m13", date:"04/11", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+  {id:"m14", date:"11/11", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m15", date:"18/11", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m16", date:"25/11", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal", desc:"20h — reunião de acompanhamento do TCC"},
+  {id:"m17", date:"02/12", type:"meeting", hidden:true, tag:"Reunião TCC", title:"Reunião semanal + extra", desc:"20h — reunião semanal · 21h — reunião extra (semana de apresentação)"},
+
+  {id:"p1", date:"10/08", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da 1ª apresentação"},
+  {id:"p2", date:"24/08", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da 2ª apresentação"},
+  {id:"p3", date:"07/09", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da 3ª apresentação"},
+  {id:"p4", date:"21/09", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da 4ª apresentação"},
+  {id:"p5", date:"05/10", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da 5ª apresentação"},
+  {id:"p6", date:"19/10", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da 6ª apresentação"},
+  {id:"p7", date:"02/11", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da 7ª apresentação"},
+  {id:"p8", date:"30/11", type:"deadline-prep", hidden:true, tag:"Prazo interno", title:"Slides e roteiro escrito", desc:"Data limite para preparar os slides e o roteiro escrito da Defesa/Prova"},
+
+  {id:"r1", date:"20/08", type:"deadline-doc", hidden:true, tag:"Prazo interno", title:"Documento escrito (roteiro Ade)", desc:"Data máxima para registrar no documento escrito o que foi apresentado na última apresentação"},
+  {id:"r2", date:"03/09", type:"deadline-doc", hidden:true, tag:"Prazo interno", title:"Documento escrito (roteiro Ade)", desc:"Data máxima para registrar no documento escrito o que foi apresentado na última apresentação"},
+  {id:"r3", date:"01/10", type:"deadline-doc", hidden:true, tag:"Prazo interno", title:"Documento escrito (roteiro Ade)", desc:"Data máxima para registrar no documento escrito o que foi apresentado na última apresentação"},
+  {id:"r4", date:"15/10", type:"deadline-doc", hidden:true, tag:"Prazo interno", title:"Documento escrito (roteiro Ade)", desc:"Data máxima para registrar no documento escrito o que foi apresentado na última apresentação"},
+  {id:"r5", date:"29/10", type:"deadline-doc", hidden:true, tag:"Prazo interno", title:"Documento escrito (roteiro Ade)", desc:"Data máxima para registrar no documento escrito o que foi apresentado na última apresentação"},
+  {id:"r6", date:"12/11", type:"deadline-doc", hidden:true, tag:"Prazo interno", title:"Documento escrito (roteiro Ade)", desc:"Data máxima para registrar no documento escrito o que foi apresentado na última apresentação"}
 ];
 
 const JSONBIN_ID = "6a7bb3e2f5f4af5e29097f31";
@@ -524,20 +618,29 @@ function isPastDate(dateStr){
   return parseEntryDate(dateStr) < today;
 }
 
+let showHidden = false;
+let lastState = {};
+
 function render(state){
+  lastState = state;
   const tl = document.getElementById('timeline');
   tl.innerHTML = '';
 
-  ENTRIES.forEach(entry => {
+  const visibleEntries = ENTRIES
+    .filter(entry => !entry.hidden || showHidden)
+    .sort((a, b) => parseEntryDate(a.date) - parseEntryDate(b.date));
+
+  visibleEntries.forEach(entry => {
     const s = state[entry.id] || {done:false, link:"", comment:""};
-    const isCheckable = entry.type !== "class";
+    const isCheckable = entry.type !== "class" && !entry.hidden;
     const hasLink = entry.type === "presentation";
     const overdue = isCheckable && !s.done && isPastDate(entry.date);
 
     const wrap = document.createElement('div');
     wrap.className = "entry" + (isCheckable && s.done ? " done" : "") + (overdue ? " overdue" : "");
 
-    const cardClass = (entry.type === "class" ? "card simple"
+    const cardClass = (entry.hidden ? "card extra-entry"
+      : entry.type === "class" ? "card simple"
       : entry.type === "delivery" ? "card milestone-delivery"
       : entry.type === "defense" ? "card milestone-defense"
       : "card") + (overdue ? " past" : "");
@@ -586,7 +689,7 @@ function render(state){
   });
 
   // progress
-  const checkable = ENTRIES.filter(e => e.type !== "class");
+  const checkable = ENTRIES.filter(e => e.type !== "class" && !e.hidden);
   const doneCount = checkable.filter(e => (state[e.id]||{}).done).length;
   const pct = checkable.length ? Math.round((doneCount/checkable.length)*100) : 0;
   document.getElementById('progressFill').style.width = pct + "%";
@@ -695,6 +798,17 @@ async function save(state){
 (async function init(){
   const state = await load();
   render(state);
+
+  const toggleBtn = document.getElementById('toggleExtra');
+  const toggleLabel = document.getElementById('extraToggleLabel');
+  toggleBtn.addEventListener('click', () => {
+    showHidden = !showHidden;
+    toggleBtn.classList.toggle('open', showHidden);
+    toggleLabel.textContent = showHidden
+      ? 'Ocultar reuniões semanais e prazos internos'
+      : 'Mostrar reuniões semanais e prazos internos';
+    render(lastState);
+  });
 
   // Atualiza periodicamente para refletir o que outras pessoas preencheram,
   // sem interromper quem estiver digitando no momento.
