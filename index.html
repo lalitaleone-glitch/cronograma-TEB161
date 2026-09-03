@@ -599,8 +599,8 @@ const ENTRIES = [
   {id:"rv2", date:"14/11", type:"review", hidden:true, tag:"Revisão de documento", title:"Revisão cruzada", desc:"Revisão do documento escrito por um grupo diferente do que redigiu — 5 dias antes da entrega final (19/11)"}
 ];
 
-const JSONBIN_ID = "6a7bb3e2f5f4af5e29097f31";
-const JSONBIN_KEY = "$2a$10$9GMREb9GHtnUUIzyYFK.FOmMnWbIvprEtPVH0WphYv6qP7.J1eZOe";
+const JSONBIN_ID = "6a98ce01f5f4af5e29637fba";
+const JSONBIN_KEY = "$2a$10$259WTC5WJ2QsXcJuglDfhOZ5UW7Ke.JQ.63f295q.zN3N7uTXwXTe";
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
 
 function iconLink(){
@@ -831,7 +831,7 @@ async function save(state){
     if(isTyping) return;
     const freshState = await load();
     render(freshState);
-  }, 15000);
+  }, 600000);
 })();
 </script>
 
